@@ -31,3 +31,16 @@ Status LinkInsert_DuL(DuLinkList &L, int i, ElemType e) {
     p->prior = s;
     return OK;
 }
+
+Status LinkDelete_DuL(DuLinkList &L, int i, ElemType &e) {
+    // 删除第i个元素
+    DuLinkList p;
+    if (!(p = GetElemP_DuL(L, i)))
+        return ERROR;
+    e = p->data;
+    p->prior->next = p->next; // 重新设定下一个元素的指针
+    p->next->prior = p->prior; // 重新设定上一个元素的指针
+    free(p);
+    return OK;
+}
+
