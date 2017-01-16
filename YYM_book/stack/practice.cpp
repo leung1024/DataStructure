@@ -40,6 +40,7 @@ Status LineEdit() {
             } // switch
             ch = getchar();
         } // while
+        TraverseStack(s, visit_display);
         CleanStack(s);
         if (ch != EOF)
             ch = getchar();
@@ -47,4 +48,5 @@ Status LineEdit() {
     DestoryStack(s);
     return OK;
 }
+
 

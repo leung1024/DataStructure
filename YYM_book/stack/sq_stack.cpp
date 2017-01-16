@@ -13,6 +13,16 @@ Status GetTop(SqStack s, SElemType &e) {
     return OK;
 }
 
+Status TraverseStack(SqStack s, Status (*vist)(SElemType)) {
+    SElemType *p;
+    p = s.base;
+    while (p != s.top) {
+        visit(*p);
+        p++:
+    }
+    return OK;
+}
+
 Status StackEmpty(SqStack &s) {
     if (s.base == s.top) {
         return TRUE;
@@ -36,7 +46,8 @@ Status Push(SqStack &s, SElemType e) {
 
 Status Pop(SqStack &s, SElemType &e) {
     if (s.top == s.base) return ERROR;
-    e = *--s.top;
+    e = *(s.top - 1);
+    s.top--;
     return OK;
 }
 
@@ -50,3 +61,9 @@ Status DestoryStack(SqStack &s) {
     s.base = NULL;
     return OK;
 }
+
+Status visit_display(SElemType e) {
+    printf('%c', e);
+    return OK;
+}
+
