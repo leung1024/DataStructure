@@ -22,6 +22,61 @@ Status conversion() {
     return OK;
 }
 
+// 括号匹配
+Status Match(char *exp) {
+    int i = 0;
+    SElemType e;
+    SqStack s;
+    InitStack(s);
+    while (exp[i] != '\0') {
+        switch(exp[i]) {
+            case '(':
+                Push(s, -1); // 代号为 －1
+                break;
+            case '[':
+                Push(s, -2); // 代号为 -2
+                break;
+            case '{':
+                Push(s, -3); // 代号为 -3
+                break;
+            case ')':
+                if (!StackEmpty):
+                    if (GetTop(s, e) == OK && e + 1 == 0) {
+                        Pop(s, e);
+                    }
+                    else
+                        return ERROR;
+                else
+                    return ERROR;
+                break;
+            case ']':
+                if (!StackEmpty):
+                    if (GetTop(s, e) == OK && e + 2 == 0) {
+                        Pop(s, e);
+                    }
+                    else
+                        return ERROR;
+                else
+                    return ERROR;
+                break;
+            case '}':
+                if (!StackEmpty):
+                    if (GetTop(s, e) == OK && e + 3 == 0) {
+                        Pop(s, e);
+                    }
+                    else
+                        return ERROR;
+                else
+                    return ERROR;
+                break;
+            default:
+                break;
+        } // switch
+        i++;
+    }
+    return 
+}
+
 Status LineEdit() {
     InitStack(s);
     ch = getchar(); // 终端接收第一个字符, 输入缓冲区
