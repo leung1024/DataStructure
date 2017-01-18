@@ -125,4 +125,17 @@ Status MergeList_L(
     return OK;
 }
 
+Status LinkListTraverse(LinkList s, Status (*visit)(Link)) {
+    Link cur_node;
+    cur_node = s.head->next;
+    while (cur_node->next) {
+        visit(cur_node);
+        cur_node = cur_node->next;
+    }
+    return OK;
+}
 
+Status visit_display(Link p) {
+    printf("%d ", p->data);
+    return TRUE;
+}

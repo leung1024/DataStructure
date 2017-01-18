@@ -41,3 +41,5 @@ Status MergeList_L(
         LinkList &Lc,
         int (*compare)(ElemType, ElemType));
 // 合并两个线性链表 
+Status LinkListTraverse(LinkList L);
+// 线性链表遍历
