@@ -6,14 +6,15 @@
 Status InitList_Sq(struct SqList &L) {
     L.elem = (ElemType *)malloc(LIST_INIT_SIZE * sizeof(ElemType));
     if (! L.elem) exit(OVERFLOW);
-    L.length = 0;
+    L.length = 0; // 表中当前元素个数
     L.listsize = LIST_INIT_SIZE;
     return OK;
 }
 
-//插入
+// 插入
 Status ListInsert_Sq(struct SqList &L, int i, ElemType e) {
-    ElemType * newbase;
+    // 时间复杂度为O(n)
+    ElemType *newbase; // 新基地址 重新分配
     int *q, *p;
     if(i < 1||i > L.length + 1) return ERROR;
     if(L.length >= L.listsize) {
@@ -24,35 +25,41 @@ Status ListInsert_Sq(struct SqList &L, int i, ElemType e) {
         L.listsize += LISTINCREMENT;
     }
 
-    q = &(L.elem[i - 1]);
-    for(p = &(L.elem[L.length - 1]); p >= q; --p) *(p + 1) = *p;
+    q = &(L.elem[i - 1]); // 第i个元素的位置节点
+    for(cur_node = &(L.elem[L.length - 1]); cur_node >= q; --cur_node) { // 从最后一个元素开始
+        *(cur_node + 1) = *cur_node;
+    }
 
-    *q = e;
+    *q = e; // 对第i个节点赋值
     ++L.length;
     return OK;
 }
 
-//删除
+// 删除
 Status ListDelete_Sq(struct SqList &L, int i, ElemType e) {
     int *p, *q;
     if(i < 1|| i > L.length + 1) return ERROR;
-    p = &(L.elem[i - 1]);
-    e = *p;
-    q = &(L.elem[L.length - 1]);
-    for(++p; p <= q ; ++p) *(p - 1) = *p;
+    p = &(L.elem[i - 1]); // 第i个位置
+    e = *p; // 可能需要用到被删元素的值
+    q = &(L.elem[L.length - 1]); // 最后一个位置
+    for(++p; p <= q ; ++p) {
+        *(p - 1) = *p; // 覆盖掉前面的节点
+    }
     --L.length;
     return OK;
 
 }
 
-//查找
+// 按值查找
 int LocateElem_Sq(struct SqList L, ElemType e,
                     Status (*compare)(ElemType, ElemType)) {
     int i = 1;          //i的初值为第一个元素
     int *p;
     p = L.elem;
-    while(i <= L.length && !(*compare)(*p++, e)) ++i;
-    if(i <= L.length) return i;
+    while (i <= L.length && (*compare)) {
+        (*p++, e)) ++i;
+    }
+    if (i <= L.length) return i;
     else return 0;
 }
 
@@ -75,7 +82,15 @@ void MergeList_Sq(struct SqList La, struct SqList Lb, struct SqList &Lc) {
     while (pb <= pb_last) *pc++ = *pb++;
 }
 
-
+int compare_num(ElemType a, ElemType b) {
+    if (a < b) {
+        return 1;
+    }
+    else if (a == b) {
+        return 0;
+    }
+    else return -1
+}
 
 
 

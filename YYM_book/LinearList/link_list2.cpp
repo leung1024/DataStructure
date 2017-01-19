@@ -50,6 +50,10 @@ Status GetHead(LinkList L) {
     return L.head;
 }
 
+int ListLength(LinkList L) {
+    return L.len;
+}
+
 Position NextPos(LinkList L, Link p) {
     if (L.tail == p) return NULL; // 如果p是最后一个节点 返回NULL
     return p->next;
@@ -57,6 +61,19 @@ Position NextPos(LinkList L, Link p) {
 
 ElemType GetCurElem(Link p) {
     return p->data;
+}
+
+ElemType GetElem(LinkList L, int i) {
+    Link cur_node;
+    cur_node = L.head->next;
+    int j = 1;
+    if (L.len < i) return ERROR;
+    while(cur_node->next && i > j) {
+        cur_node = cur_node->next;
+        ++j;
+    }
+
+    return cur_node->data;
 }
 
 Status SetCurElem(Link &p, ElemType e) {

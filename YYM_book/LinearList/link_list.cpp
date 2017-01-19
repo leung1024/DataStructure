@@ -15,7 +15,8 @@ Status CreateList_L(struct LinkList &L, int n) {
 
 Status GetElem_L(struct LNode L, int i, ElemType &e) {
     // L为头指针
-    struct LNode *p = L->next; // 指向第一个节点
+    // 顺序存取结构
+    struct LNode *p = L->next; // L为头结点，指向第一个节点
     j = 1;
     while (p && j < i) {
         p = p->next;
@@ -30,10 +31,14 @@ Status GetElem_L(struct LNode L, int i, ElemType &e) {
 Status ListInsert_L(struct LinkList &L, int i, ElemType e) {
     // 在第i个节点插入e
     struct LNode p = L->next;
-    j = 0;
-    while (p && j < i - 1) {p = p->next; ++j;} // 找出第i个节点
+    j = 1;
+    while (p && j < i) {
+        p = p->next;
+        ++j;
+    } // 找出第i个节点
     if (!p || j > i) return ERROR;
     s = (LinkList)malloc(sizeof(LNode));
+    // 修改指针为 O(1)
     s->data = e;
     s->next = p->next;
     p->next = s;
@@ -42,17 +47,31 @@ Status ListInsert_L(struct LinkList &L, int i, ElemType e) {
 
 Status LinkDelete_L(struct LinkList &L, int i, ElemType &e) {
     struct LNode p = L;
-    struct LNode del_q;
-    j = 0;
-    while (p && j < i - 1) {p = p->next; ++j;}
+    struct LNode del_node;
+    j = 1;
+    while (p && j < i) {
+        p = p->next;
+        ++j;
+    }
     if (!(p->next || j > i - 1)) return ERROR;
-    del_q = p->next;
-    p->next = del_q->next;
-    e = del_q->data; // e返回被删的数据
-    free(del_q); // 释放q
+    del_node = p->next;
+    p->next = del_node->next;
+    e = del_node->data; // e返回被删的数据
+    free(del_node); // 释放q
 }
 
-// 合并
+// 清空链表
+Status ClearList(LinkList &L) {
+    LinkList p;
+    while (L->next) {
+        p = L->next;
+        L->next = p->next;
+        free(p);
+    }
+    return OK;
+}
+
+//  归并
 Status MergeList_L(
         struct LinkList &La,
         struct LinkList &Lb,

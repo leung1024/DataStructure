@@ -22,10 +22,14 @@ Status InsFirst(Link h, Link s);
 // 已知线性链表的头节点，将s所指的节点插入在第一个节点之前
 Status GetHead(LinkList L);
 // 获取头指针
+int ListLength(LinkList L);
+// 获取链表长度
 Status NextPos(LinkList L, Link p);
 // 获取下一个节点的指针
 ElemType GetCurElem(Link p);
 // 获取当前p节点的值
+ElemType GetElem(LinkList L, int i);
+// 获取第i个数据
 Status SetCurElem(Link &p, ElemType e);
 // 设置当前p节点的值
 Status Append(LinkList &L, Link s);
