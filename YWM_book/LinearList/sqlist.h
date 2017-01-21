@@ -38,4 +38,6 @@ void MergeList_Sq(
         struct SqList Lc);
 int compare_num(ElemType a, ElemType b);
 // 对比两个数的大小
+int compare_list(SqList La, SqList Lb);
+// 对比两表相对应数据的大小
 

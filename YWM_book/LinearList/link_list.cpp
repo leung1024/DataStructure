@@ -13,6 +13,43 @@ Status CreateList_L(struct LinkList &L, int n) {
     }
 }
 
+LinkList CreateList_L_2() {
+    LinkList L = (LinkList)malloc(sizeof(LinkList));
+    LNode *s, *last_node;
+    int x;
+    scanf("%d", &x);
+    L = NULL;
+    while (x) {
+        s = (*LNode)malloc(sizeof(LNode));
+        s->data = x;
+        if (L == NULL) L = s; // 第一个节点处理 
+        else last_node->next = s; // 更新最后一个节点
+        last_node = s;
+        scanf("%d", &x);
+    }
+    if (last_node != NULL) last_node->next = NULL; // 非空链表 如果有头结点 这两个if 都可以省略
+    return L
+}
+
+LinkList CreateList_L_3() {
+    LinkList L = (*LNode)malloc(sizeof(LNode));
+    LNode *s, *last_node;
+    int x;
+    scanf("%d", &x);
+    L->next = NULL;
+    last_node = L; // 头结点
+    while (x) {
+        s = (*LNode)malloc(sizeof(LNode));
+        s->data = x;
+        last_node->next = s; // 更新最后一个节点
+        last_node = s;
+        scanf("%d", &x);
+    }
+    last_node->next = NULL; // 非空链表 如果有头结点 这两个if 都可以省略
+    return L
+}
+
+
 Status GetElem_L(struct LNode L, int i, ElemType &e) {
     // L为头指针
     // 顺序存取结构
@@ -75,7 +112,7 @@ Status ClearList(LinkList &L) {
 Status MergeList_L(
         struct LinkList &La,
         struct LinkList &Lb,
-        struct LinkList %Lc) {
+        struct LinkList &Lc) {
     struct LNode pa, pb, pc;
     *pa = La->next;
     *pb = Lb->next;
@@ -99,5 +136,26 @@ Status MergeList_L(
     free(La);
 }
 
+int delete_elem(LinkList &L, int mink, int maxk) {
+    LNode *p, *pre, *tail, *s, *tmp;
+    p = L->next;
+    while (p && p->data <= mink) {
+        pre = p;
+        p = p->next;
+    }
 
+    while (p && p->data < maxk) {
+        tail = p;
+        p = p->next;
+    }
+    tmp = pre->next;
+    pre->next = tail;
+
+    while (tmp != tail) { // 删除节点
+        s = tmp->next;
+        free(tmp);
+        tmp = s;
+    } // while
+
+}
 

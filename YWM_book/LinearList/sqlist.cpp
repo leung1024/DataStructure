@@ -92,6 +92,20 @@ int compare_num(ElemType a, ElemType b) {
     else return -1
 }
 
+int compare_list(SqList La, SqList Lb) {
+    int i = 0;
+    while (i < La.length && i < Lb.length) {
+        if (La.elem[i] == Lb.elem[i])
+            i++;
+        else if (La.elem[i] < Lb.elem[i])
+            return -1;
+        else
+            return 1;
+    }
+    if (i > La.length && i > Lb.length) return 0; // 两表相等
+    else if (i > Lb.length) return 1;
+    else return -1;
+}
 
 
 
