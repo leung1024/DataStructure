@@ -32,4 +32,6 @@ Status ClearList_L(LinkList &L);
 // 清空链表
 int delete_elem(LinkList &L, int mink, int maxk);
 // 删除大小在mink 到 maxk之间的元素
+Status Reverse_L(LinkList &L);
+// 头插法实现链表逆置
 

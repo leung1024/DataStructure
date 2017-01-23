@@ -111,27 +111,34 @@ Status ClearList(LinkList &L) {
 //  归并
 Status MergeList_L(
         struct LinkList &La,
-        struct LinkList &Lb,
-        struct LinkList &Lc) {
-    struct LNode pa, pb, pc;
+        struct LinkList &Lb) {
+    struct LNode pa, pb, pc, q;
+    LinkList Lc = (LinkList)malloc(sizeof(LinkList));
     *pa = La->next;
     *pb = Lb->next;
-    *pc = Lc = La;
+    *pc = Lc->next = NULL;
 
-    while (pa && pb) {
-        if (pa->data <= pb->data){
+
+    while (pa || pb) {
+        if (pa) data_a = pa->data;
+        if (pb) data_b = pb->data;
+        if (data_a <= data_b){
+            q = pa->next;
+            pa->next = pc->next; // 头插pa
             pc->next = pa;
-            pc = pc->next; // 更新pc指向的位置
-            pa = pa->next; // 更新pa指向的位置
+            // pc = pc->next; // 更新pc指向的位置
+            pa = q; // 更新pa指向的位置
         }
         else {
+            q = pb->next;
+            pb->next = pc->next;
             pc->next = pb;
-            pc = pc->next;
-            pb = pb->next;
+            // pc = pc->next;
+            pb = q;
         }
     }
 
-    pc->next = pa ? pa : pb; // 插入剩余
+    // q = pa ? pa : pb; // 插入剩余
     free(Lb);
     free(La);
 }
@@ -159,3 +166,15 @@ int delete_elem(LinkList &L, int mink, int maxk) {
 
 }
 
+Status Reverse_L(LinkList &L) {
+    LNode *p, *succ;
+    p = L->next;
+    L->next = NULL;
+    while (p) { // p 为正准备前插的节点
+        succ = p->next;
+        p->next = L->next;
+        L->next = p;
+        p = succ;
+    }
+    return OK;
+}

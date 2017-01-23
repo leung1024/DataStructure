@@ -36,6 +36,8 @@ void MergeList_Sq(
         struct SqList La,
         struct SqList Lb,
         struct SqList Lc);
+Status Reverse_Sq(SqList &L);
+// 逆置顺序表
 int compare_num(ElemType a, ElemType b);
 // 对比两个数的大小
 int compare_list(SqList La, SqList Lb);

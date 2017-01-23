@@ -82,6 +82,19 @@ void MergeList_Sq(struct SqList La, struct SqList Lb, struct SqList &Lc) {
     while (pb <= pb_last) *pc++ = *pb++;
 }
 
+Status Reverse_Sq(SqList &L) {
+    int mid_position = L.length / 2 - 1; // 到中间停止
+    int tmp, i = 0, last_index = L.length - 1;
+    while (i <= mid_position) {
+        if (i == last_index - i) break; // 长度为奇数时中间的元素不用操作
+        tmp = L.elem[i];
+        L.elem[i] = L.elem[last_index - i];
+        L.elem[last_index - i] = tmp;
+        ++i;
+    }
+    return OK;
+}
+
 int compare_num(ElemType a, ElemType b) {
     if (a < b) {
         return 1;
