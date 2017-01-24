@@ -120,27 +120,59 @@ Status MergeList_L(
 
 
     while (pa || pb) {
-        if (pa) data_a = pa->data;
-        if (pb) data_b = pb->data;
-        if (data_a <= data_b){
-            q = pa->next;
-            pa->next = pc->next; // 头插pa
-            pc->next = pa;
-            // pc = pc->next; // 更新pc指向的位置
-            pa = q; // 更新pa指向的位置
+        if (!pa) {
+            q = pb;
+            pb = pb->next;
+        }
+        else if (!pb) {
+            q = pa;
+            pa = pa->next;
+        }
+        else if (pa->data <= pb->data) {
+            q = pa;
+            pa = pa->next;
         }
         else {
-            q = pb->next;
-            pb->next = pc->next;
-            pc->next = pb;
-            // pc = pc->next;
-            pb = q;
+            q = pb;
+            pb = p->next;
         }
+        q->next = Lc->next; // 需要前插的节点连接到头结点的next, 即头插法
+        Lc->next = q;
     }
 
     // q = pa ? pa : pb; // 插入剩余
     free(Lb);
     free(La);
+}
+
+Status OneToThree(
+        LinkList &L,
+        LinkList &La,
+        LinkList &Ld,
+        LinkList &Lo) {
+    La = (LinkList)malloc(sizeof(LNode)); // 字母链表
+    Ld = (LinkList)malloc(sizeof(LNode)); // 数字链表
+    Lo = (LinkList)malloc(sizeof(LNode)); // 其他字符串
+    LNode *tmp;
+    while (L) {
+        if (isAlphabet(L->data)) {
+            tmp = L->next;
+            tmp->next = La->next; // 后插法
+            La->next = tmp;
+        }
+        else if (isNumber(L->data)) {
+            tmp = L->next;
+            tmp->next = Ld->next;
+            Ld->next = tmp;
+        }
+        else {
+            tmp = L->next;
+            tmp->next = Lo->next; // 后插法
+            Lo->next = tmp;
+        }
+        L = L->next;
+    }
+    return OK;
 }
 
 int delete_elem(LinkList &L, int mink, int maxk) {
@@ -178,3 +210,23 @@ Status Reverse_L(LinkList &L) {
     }
     return OK;
 }
+
+int isAlphabet(char elem) {
+    if (elem >= 'a' && elem <= 'z' ||
+        elem >= 'A' && elem <= 'Z') {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+int isNumber(char elem) {
+    if (elem >= '0' && elem <= '9') {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+

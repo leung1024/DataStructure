@@ -27,11 +27,20 @@ Status MergeList_L(
         struct LinkList &La,
         struct LinkList &Lb,
         struct LinkList &Lc);
-// 归并操作
+// 归并两个递减排列的链表，形成一个递减的新链表
+Status OneToThree(
+		LinkList &L,
+		LinkList &La,
+		LinkList &Ld,
+		LinkList &Lo);
+// 分解
 Status ClearList_L(LinkList &L);
 // 清空链表
 int delete_elem(LinkList &L, int mink, int maxk);
 // 删除大小在mink 到 maxk之间的元素
 Status Reverse_L(LinkList &L);
 // 头插法实现链表逆置
-
+int isAlphabet(char elem);
+// 判断是不是字母
+int isNumber(char elem);
+// 判断字符串是不是数字
