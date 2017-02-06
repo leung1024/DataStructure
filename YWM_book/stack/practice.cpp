@@ -104,4 +104,61 @@ Status LineEdit() {
     return OK;
 }
 
+Status MatchReversedString(char *ch) {
+    // abc&cba@ 合法
+    // abc&bac@ abc&@ 不合法
+    InitStack(s);
+    int i = 0;
+    char op = 'push';
+    while (ch[i] != '@') { // @代表结束
+        switch(ch[i]) {
+            case '&':
+                op = 'pop'; // &后面的元素要与栈内的元素进行比较
+                break;
+            default:
+                if (op == 'push') { // 把&前面的元素入栈
+                    Push(s, ch[i]);
+                }
+                else {
+                    tmp = Pop(s, ch[i]);
+                    if (tmp != ch[i])
+                        printf("字符串不对称\n");
+                        return FALSE;
+                }
+                break;
+        } // switch
+        i++;
+    }
+    if (!StackEmpty(s)) // 如果前面的元素没有完全pop出来说明不对称
+        printf("字符串不对称\n");
+        return FALSE;
+    else
+        printf("字符串对称\n");
+    return TRUE;
+}
 
+Status MatchReversedString2() {
+    char ch;
+    InitStack(s);
+    InitQueue(queue);
+    SElemType se;
+    QElemType qe;
+    scanf(ch);
+    while(ch != '@') {
+        Push(s, ch);
+        EnQueue(queue, ch);
+        scanf(ch);
+    }
+    Status state = TRUE;
+    while (!StackEmpty && state) {
+        GetTop(s, se);
+        GetHead(queue, qe);
+        if (se == qe) {
+            Pop(s);
+            DeQueue(queue);
+        }
+        else
+            state = FALSE;
+    }
+    return state
+}

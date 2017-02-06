@@ -22,3 +22,16 @@ Status DeQueue(SqQueue &Q, QElemType &e) {
 	e = Q.base[Q.front];
 	Q.front = (Q.front + 1) % Q.queuesize;
 }
+
+Status GetHead(SqQueue Q, QElemType &e) {
+	if (Q.rear == Q.front) {
+		e = NULL;
+	}
+	else {
+		e = Q.base[Q.front];
+	}
+}
+
+int QueueLength(SqQueue Q) {
+	return (Q.rear - Q.front + MAXQSIZE) % MAXQSIZE;
+}
