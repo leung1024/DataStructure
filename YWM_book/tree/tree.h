@@ -16,6 +16,8 @@ typedef struct TriTNode {
 
 Status CreateBiTree(BiTree &T);
 // 构造二叉树
+Status CreateBiTree2(BiTree &T);
+// 通过扩展的先序序列构造二叉树
 Status PreOrderTraverse(BiTree T, Status (*visit)(TElemType e));
 // 先根遍历(递归描述)
 // visit是对节点操作的函数
@@ -34,3 +36,7 @@ int CountLeaf(BiTree T, int &count);
 // 统计叶子节点的数量
 int Depth(BiTree T);
 // 计算树的深度
+BiTree CreateTreeNode(TElemType item, BiTree *lptr, BiTree *rptr);
+// 生成一个二叉树节点
+BiTree CopyTree(BiTree T);
+// 复制树

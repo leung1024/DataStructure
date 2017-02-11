@@ -5,14 +5,28 @@ Status CreateBiTree(BiTree &T) {
 	scanf(&ch);
 	if (ch == '') {
 		T = NULL;
-	}
-	else {
+	} else {
 		if (!(T = (BiTNode*)malloc(sizeof(BiTNode)))) {
 			exit(OVERFLOW);
 		}
 		T->data = ch;
 		CreateBiTree(T->lchild);
 		CreateBiTree(T->rchild);
+	}
+	return OK;
+}
+
+Status CreateBiTree2(BiTree &T) {
+	scanf(&ch);
+	if (ch == ' ') {
+		T = NULL;
+	} else {
+		if (!(T = (BiTNode*)malloc(sizeof(BiTNode)))) {
+			exit(OVERFLOW);
+		}
+		T->data = ch;
+		CreateBiTree2(T->lchild);
+		CreateBiTree2(T->rchild);
 	}
 	return OK;
 }
@@ -48,8 +62,7 @@ Status InOrderTraverse2(BiTree T, Status (*visit)(TElemType e)) {
 		if (p != NULL) {
 			Push(s, p);
 			p = p->lchild;
-		}
-		else {
+		} else {
 			p = Pop(s); // 空节点返回到双亲
 			visit(p->data);
 			p = p->rchild;
@@ -64,8 +77,7 @@ Status PostOrderTraverse2(BiTree T, Status (*visit)(TElemType e)) {
 		if (p != NULL) {
 			Push(s, p);
 			p = p->lchild;
-		}
-		else {
+		} else {
 			p = Pop(s); // 空节点返回到双亲
 			if (p != NULL) {
 				tmp = p;
@@ -97,11 +109,38 @@ int Depth(BiTree T) {
 	int depthLeft = depthRight = depthval = 0;
 	if (!T) {
 		depthval = 0;
-	}
-	else {
+	} else {
 		depthLeft = Depth(T->lchild); // 根节点数左子树最大值（即深度最大值）
 		depthRight = Depth(T->rchild);
 		depthval = 1 + (depthLeft > depthRight ? depthLeft : depthRight);
 	}
 	return depthval;
+}
+
+BiTree CreateTreeNode(TElemType item, BiTree *lptr, BiTree *rptr) {
+	if (!(T = (*BiTNode)malloc(sizeof(BiTNode)))) {
+		return exit(ERROR);
+	} else {
+		T->data = item;
+		T->lchild = lptr;
+		T->rchild = rptr;
+		return T;
+	}
+}
+
+BiTree CopyTree(BiTree T) {
+	BiTree *newlptr, *newrptr, newT;
+	if (!T) return NULL;
+	if (T->lchild) {
+		newlptr = CopyTree(T->lchild);
+	} else {
+		newlptr = NULL;
+	}
+	if (T->rchild) {
+		newrptr = CopyTree(T->rchild);
+	} else {
+		newrptr = NULL;
+	}
+	newT = CreateTreeNode(T->data, newlptr, newrptr);
+	return newT;
 }
