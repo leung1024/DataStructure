@@ -30,3 +30,7 @@ Status InOrderTraverse2(BiTree T, Status (*visit)(TElemType e));
 // 中根遍历(非递归描述)
 Status PostOrderTraverse2(BiTree T, Status (*visit)(TElemType e));
 // 后根遍历(非递归描述)
+int CountLeaf(BiTree T, int &count);
+// 统计叶子节点的数量
+int Depth(BiTree T);
+// 计算树的深度

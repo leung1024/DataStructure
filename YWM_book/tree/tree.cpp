@@ -43,7 +43,7 @@ Status PostOrderTraverse(BiTree T, Status (*visit)(TElemType e)) {
 
 Status InOrderTraverse2(BiTree T, Status (*visit)(TElemType e)) {
 	InitStack(s);
-	p = T;
+	BiTree p = T;
 	while(p != NULL || !StackEmpty(s)) {
 		if (p != NULL) {
 			Push(s, p);
@@ -57,7 +57,51 @@ Status InOrderTraverse2(BiTree T, Status (*visit)(TElemType e)) {
 	}
 }
 
+Status PostOrderTraverse2(BiTree T, Status (*visit)(TElemType e)) {
+	InitStack(s);
+	BiTree p = T, tmp;
+	while(p != NULL || !StackEmpty(s)) {
+		if (p != NULL) {
+			Push(s, p);
+			p = p->lchild;
+		}
+		else {
+			p = Pop(s); // 空节点返回到双亲
+			if (p != NULL) {
+				tmp = p;
+			}
+			p = p->rchild;
+			if (p == NULL) {
+				visit(tmp->data);
+			}
+		}
+	}
+}
+
 Status display(TElemType e) {
 	printf('%s', e);
 	return OK;
+}
+
+int CountLeaf(BiTree T, int &count) {
+	if (T) {
+		if (T->lchild == T->rchild == NULL) {
+			count++;
+		}
+		CountLeaf(T->lchild, count);
+		CountLeaf(T->rchild, count);
+	}
+}
+
+int Depth(BiTree T) {
+	int depthLeft = depthRight = depthval = 0;
+	if (!T) {
+		depthval = 0;
+	}
+	else {
+		depthLeft = Depth(T->lchild); // 根节点数左子树最大值（即深度最大值）
+		depthRight = Depth(T->rchild);
+		depthval = 1 + (depthLeft > depthRight ? depthLeft : depthRight);
+	}
+	return depthval;
 }
