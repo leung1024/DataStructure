@@ -55,6 +55,25 @@ Status PostOrderTraverse(BiTree T, Status (*visit)(TElemType e)) {
 	}
 }
 
+Status LevelOrderTraverse(BiTree T, Status (*visit)(TElemType e)) {
+	BiTree Queue[MAX_TREE_TREE];
+	int front, rear;
+	if (T == NULL) return ERROR;
+	front = -1;
+	rear = 0;
+	Queue[rear] = T;
+	while(front != rear) {
+		++front;
+		visit(Queue[front]->data);
+		if (Queue[front]->lchild != NULL) {
+			Queue[++rear] = Queue[front]->lchild;
+		}
+		if (Queue[front]->rchild != NULL) {
+			Queue[++rear] = Queue[front]->rchild;
+		}
+	} 
+}
+
 Status InOrderTraverse2(BiTree T, Status (*visit)(TElemType e)) {
 	InitStack(s);
 	BiTree p = T;

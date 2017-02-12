@@ -1,4 +1,4 @@
-
+#define MAX_TREE_TREE 100;
 // typedef TElemType SqBiTree[MAX_TREE_TREE]; // 0 号放根节点
 typedef char TElemType;
 
@@ -25,6 +25,8 @@ Status InOrderTraverse(BiTree T, Status (*visit)(TElemType e));
 // 中根遍历(递归描述)
 Status PostOrderTraverse(BiTree T, Status (*visit)(TElemType e));
 // 后根遍历(递归描述)
+Status LevelOrderTraverse(BiTree T, Status (*visit)(TElemType e));
+// 层次遍历
 Status PreOrderTraverse2(BiTree T, Status (*visit)(TElemType e));
 // 先根遍历(非递归描述)
 // visit是对节点操作的函数
